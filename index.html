@@ -143,7 +143,7 @@ main{max-width:1100px;margin:0 auto;padding:16px}
 footer{max-width:1100px;margin:24px auto 0;padding:24px 16px 40px;text-align:center;color:var(--texto-suave);font-size:12.5px;border-top:1px solid var(--linha)}
 footer .assinatura{height:44px;margin:0 auto 14px}
 footer a{color:var(--marca-escura);font-weight:500;text-decoration:none}
-.toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:var(--texto);color:var(--fundo);padding:10px 16px;border-radius:999px;font-size:13px;z-index:70;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast{position:fixed;left:50%;bottom:130px;transform:translateX(-50%);background:var(--texto);color:var(--fundo);padding:10px 16px;border-radius:999px;font-size:13px;z-index:70;opacity:0;transition:opacity .2s;pointer-events:none}
 .toast.on{opacity:1}
 .pix{font-size:12px;color:var(--cafe)}
 .tams em{font-style:normal;font-size:10.5px;color:var(--texto-suave);align-self:center;margin-left:2px}
@@ -153,6 +153,42 @@ footer a{color:var(--marca-escura);font-weight:500;text-decoration:none}
 .galeria .slide img{width:100%;aspect-ratio:3/4;object-fit:cover;max-height:62vh;display:block}
 .galeria .legenda{position:absolute;left:12px;bottom:12px;background:rgba(26,26,26,.72);color:#F8F6F2;font-size:11px;letter-spacing:.04em;padding:5px 10px;border-radius:999px}
 .opcoes button:disabled{opacity:.35}
+.sacola-btn{position:relative}
+.sacola-btn b{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--terracota);color:#fff;font-size:10.5px;font-weight:600;display:grid;place-items:center;line-height:1}
+.btn-sec.wa{color:#1FA855}
+.btn-whats:disabled{background:var(--esgotado);cursor:not-allowed}
+.flutuante{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:30;display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;background:var(--preto);color:var(--offwhite);font-weight:600;font-size:14px;box-shadow:0 6px 20px rgba(26,26,26,.25)}
+.flutuante svg{width:20px;height:20px}
+.folha.sacola{padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+.sac-topo{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 6px}
+.sac-topo h2{font-family:var(--fonte-titulo);font-weight:400;font-size:24px}
+.sac-topo h2 small{font-family:var(--fonte-texto);font-size:13px;color:var(--texto-suave);margin-left:6px}
+.fechar-s{width:36px;height:36px;border-radius:50%;background:var(--cartao);box-shadow:0 1px 4px rgba(0,0,0,.12);font-size:15px}
+.sac-vazia{padding:24px 20px 8px;color:var(--texto-suave);display:flex;flex-direction:column;gap:10px}
+.sac-lista{list-style:none;padding:4px 20px}
+.sac-lista li{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--linha)}
+.sac-lista img{width:76px;height:101px;object-fit:cover;border-radius:4px;background:var(--areia);flex:0 0 auto}
+.sac-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.sac-nome{font-family:var(--fonte-titulo);font-size:15px}
+.sac-var{font-size:12.5px;color:var(--texto-suave)}
+.sac-preco{font-weight:600;font-size:14px}
+.sac-preco span{font-weight:400;font-size:12px;color:var(--cafe);margin-left:6px}
+.sac-acoes{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.qtd{display:flex;align-items:center;border:1px solid var(--linha);border-radius:4px;background:var(--cartao)}
+.qtd button{width:34px;height:32px;font-size:17px}
+.qtd button:disabled{opacity:.3}
+.qtd span{min-width:24px;text-align:center;font-weight:600}
+.remover{font-size:12.5px;color:var(--texto-suave);text-decoration:underline}
+.sac-total{padding:16px 20px 4px;display:flex;flex-direction:column;gap:4px}
+.sac-total>div{display:flex;justify-content:space-between;align-items:baseline}
+.sac-total strong{font-size:20px}
+.sac-total .pixline{color:var(--cafe)}
+.sac-total .parc,.sac-total .obs{font-size:12.5px;color:var(--texto-suave)}
+.sac-total .obs{margin-top:6px}
+.sac-botoes{padding:12px 20px 0;display:flex;flex-direction:column;gap:10px}
+.sac-botoes .btn-whats{flex:none}
+.btn-claro{padding:13px;border-radius:4px;border:1px solid var(--texto);font-weight:600;font-size:14.5px;letter-spacing:.03em}
+.limpar{font-size:12.5px;color:var(--texto-suave);text-decoration:underline;padding:6px}
 </style>
 </head>
 <body>
@@ -164,6 +200,7 @@ footer a{color:var(--marca-escura);font-weight:500;text-decoration:none}
       <button class="icone" id="btnBusca" aria-label="Buscar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       </button>
+      <button class="icone sacola-btn" id="btnAbrirSacola" aria-label="Abrir sacola"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 7h12l1 13H5L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><b id="badgeSacola" hidden>0</b></button>
       <a class="icone" id="btnInsta" aria-label="Instagram" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg>
       </a>
@@ -186,8 +223,11 @@ footer a{color:var(--marca-escura);font-weight:500;text-decoration:none}
   <button class="btn-sec" id="btnCompartilhar" aria-label="Compartilhar peça">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M12 3v12"/><path d="m7 8 5-5 5 5"/></svg>
   </button>
-  <a class="btn-whats" id="btnWhats" target="_blank" rel="noopener"></a>
+  <a class="btn-sec wa" id="btnWhats" target="_blank" rel="noopener" aria-label="Pedir pelo WhatsApp"></a>
+  <button class="btn-whats" id="btnSacola">Adicionar à sacola</button>
 </div>
+<section class="folha sacola" id="sacola" role="dialog" aria-modal="true" aria-label="Sacola"></section>
+<button class="flutuante" id="flutuante" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 7h12l1 13H5L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span>Ver sacola</span></button>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -266,6 +306,30 @@ const PRODUTOS = [
   const nomeCor = c => c === "Sortida" ? "Lavagem sortida" : c;
 
   let categoria = "Todas", termo = "", atual = null, tamSel = null, corSel = null;
+
+  /* ===== Sacola ===== */
+  const CHAVE = "usejl_sacola_v1";
+  let sacola = [];
+  try { sacola = JSON.parse(localStorage.getItem(CHAVE) || "[]"); } catch(e){ sacola = []; }
+  const prodDe = cod => PRODUTOS.find(p => p.codigo === cod && p.status !== "oculto");
+  function limparSacola(){
+    sacola = sacola.filter(i => { const p = prodDe(i.cod); if (!p || p.status === "esgotado") return false;
+      const max = qtd(p, i.cor, i.tam); if (max <= 0) return false; i.q = Math.min(Math.max(1, i.q|0), max); return true; });
+  }
+  function salvarSacola(){ try { localStorage.setItem(CHAVE, JSON.stringify(sacola)); } catch(e){} atualizarContador(); }
+  const nItens = () => sacola.reduce((s,i) => s + i.q, 0);
+  function totais(){
+    let cheio = 0, pix = 0;
+    sacola.forEach(i => { const p = prodDe(i.cod); cheio += p.preco * i.q; pix += p.pix * i.q; });
+    return { cheio: Math.round(cheio*100)/100, pix: Math.round(pix*100)/100 };
+  }
+  function atualizarContador(){
+    const n = nItens();
+    const b = $("#badgeSacola"); if (b){ b.textContent = n; b.hidden = n === 0; }
+    const f = $("#flutuante");
+    if (f){ f.hidden = n === 0 || !!atual || sacolaAberta; f.querySelector("span").textContent = `Ver sacola (${n}) · ${brl(totais().cheio)}`; }
+  }
+  let sacolaAberta = false;
 
   /* Imagem provisória enquanto não há foto */
   function provisoria(p){
@@ -373,6 +437,7 @@ const PRODUTOS = [
     $("#folha").classList.add("ativa");
     $("#barra").classList.add("ativa");
     $("#folha").scrollTop = 0;
+    atualizarContador();
     document.body.style.overflow = "hidden";
     if (empurrar) history.pushState({cod:p.codigo}, "", "#"+p.codigo);
 
@@ -413,6 +478,7 @@ const PRODUTOS = [
     $("#folha").classList.remove("ativa");
     $("#barra").classList.remove("ativa");
     document.body.style.overflow = "";
+    atualizarContador();
   }
 
   function linkPeca(p){ return location.href.split("#")[0] + "#" + p.codigo; }
@@ -424,13 +490,95 @@ const PRODUTOS = [
       msg = `${LOJA.mensagemWhats}\n\n*${p.nome}* (${p.codigo})\n${brl(p.preco)} · ${brl(p.pix)} no Pix` +
             (corSel ? `\nCor: ${nomeCor(corSel)}` : "") + (tamSel ? `\nTamanho: ${nomeTam(tamSel)}` : "") +
             `\n\n${linkPeca(p)}`;
-      b.innerHTML = WA_ICON + (tamSel ? `Quero no tamanho ${nomeTam(tamSel)}` : "Quero essa peça");
     } else {
       msg = `Oi! Vi que a peça *${p.nome}* (${p.codigo}) esgotou. Vai ter reposição?\n\n${linkPeca(p)}`;
-      b.innerHTML = WA_ICON + "Avise quando voltar";
     }
-    b.classList.remove("off");
+    b.innerHTML = WA_ICON;
+    b.setAttribute("aria-label", ok ? "Pedir só esta peça pelo WhatsApp" : "Avise quando voltar (WhatsApp)");
+    const s = $("#btnSacola");
+    if (!ok){ s.textContent = "Esgotada"; s.disabled = true; }
+    else {
+      s.disabled = false;
+      const naSacola = sacola.find(i => i.cod === p.codigo && i.cor === corSel && i.tam === tamSel);
+      const max = tamSel ? qtd(p, corSel, tamSel) : 0;
+      s.textContent = !tamSel ? "Escolha o tamanho" : (naSacola && naSacola.q >= max ? "Já está na sacola" : "Adicionar à sacola");
+    }
     b.href = `https://wa.me/${LOJA.whatsapp}?text=${encodeURIComponent(msg)}`;
+  }
+
+  function adicionar(){
+    const p = atual; if (!p || !disponivel(p)) return;
+    if (!tamSel){ $("#aviso").innerHTML = "<b>Escolha o tamanho</b> para adicionar à sacola."; $("#tams").scrollIntoView({block:"center",behavior:"smooth"}); return; }
+    const max = qtd(p, corSel, tamSel);
+    let it = sacola.find(i => i.cod === p.codigo && i.cor === corSel && i.tam === tamSel);
+    if (it){ if (it.q >= max){ toast("Você já tem todas as unidades desta peça na sacola"); return; } it.q++; }
+    else sacola.push({cod:p.codigo, cor:corSel, tam:tamSel, q:1});
+    salvarSacola(); atualizarWhats();
+    toast("Adicionado à sacola");
+  }
+
+  function capaVariante(p, cor){ const f = (p.fotos[cor]||[])[0]; return f ? "fotos/"+f : provisoria(p); }
+
+  function montarSacola(){
+    limparSacola();
+    const el = $("#sacola");
+    if (!sacola.length){
+      el.innerHTML = `<div class="puxador"></div>
+        <div class="sac-topo"><h2>Sua sacola</h2><button class="fechar-s" id="fecharSacola" aria-label="Fechar">✕</button></div>
+        <div class="sac-vazia"><p>Sua sacola está vazia.</p><p>Escolha cor e tamanho de uma peça e toque em <b>Adicionar à sacola</b>.</p>
+        <button class="btn-claro" id="continuar">Ver as peças</button></div>`;
+    } else {
+      const t = totais();
+      el.innerHTML = `<div class="puxador"></div>
+        <div class="sac-topo"><h2>Sua sacola <small>${nItens()} ${nItens()===1?"peça":"peças"}</small></h2><button class="fechar-s" id="fecharSacola" aria-label="Fechar">✕</button></div>
+        <ul class="sac-lista">${sacola.map((i,k) => { const p = prodDe(i.cod), max = qtd(p,i.cor,i.tam); return `
+          <li>
+            <img src="${capaVariante(p,i.cor)}" alt="">
+            <div class="sac-info">
+              <div class="sac-nome">${p.nome}</div>
+              <div class="sac-var">${nomeCor(i.cor)} · ${nomeTam(i.tam)} · ${p.codigo}</div>
+              <div class="sac-preco">${brl(p.preco)} <span>${brl(p.pix)} no Pix</span></div>
+              <div class="sac-acoes">
+                <div class="qtd"><button data-k="${k}" data-d="-1" aria-label="Diminuir">−</button><span>${i.q}</span><button data-k="${k}" data-d="1" aria-label="Aumentar" ${i.q>=max?"disabled":""}>+</button></div>
+                <button class="remover" data-rm="${k}">Remover</button>
+              </div>
+            </div>
+          </li>`; }).join("")}</ul>
+        <div class="sac-total">
+          <div><span>Total</span><strong>${brl(t.cheio)}</strong></div>
+          <div class="pixline"><span>No Pix (5% off)</span><b>${brl(t.pix)}</b></div>
+          <div class="parc">ou 3x de ${brl(Math.round(t.cheio/3*100)/100)} sem juros no cartão</div>
+          <p class="obs">Entrega ou retirada combinamos com você no WhatsApp.</p>
+        </div>
+        <div class="sac-botoes">
+          <a class="btn-whats" id="finalizar" target="_blank" rel="noopener">${WA_ICON}Finalizar pedido no WhatsApp</a>
+          <button class="btn-claro" id="continuar">Continuar comprando</button>
+          <button class="limpar" id="esvaziar">Esvaziar sacola</button>
+        </div>`;
+      const linhas = sacola.map((i,n) => { const p = prodDe(i.cod); return `${n+1}. *${p.nome}* (${p.codigo})\n   Cor: ${nomeCor(i.cor)} · Tam: ${nomeTam(i.tam)} · ${i.q}x ${brl(p.preco)}`; }).join("\n");
+      const msg = `Oi! Montei minha sacola na Curadoria Use JL:\n\n${linhas}\n\n*Total: ${brl(t.cheio)}*\nNo Pix: ${brl(t.pix)} (5% off)\nou 3x de ${brl(Math.round(t.cheio/3*100)/100)} sem juros\n\nComo fazemos o pagamento e a entrega?`;
+      $("#finalizar").href = `https://wa.me/${LOJA.whatsapp}?text=${encodeURIComponent(msg)}`;
+      el.querySelectorAll(".qtd button").forEach(b => b.onclick = () => { const i = sacola[+b.dataset.k]; i.q += +b.dataset.d; if (i.q < 1) sacola.splice(+b.dataset.k,1); salvarSacola(); montarSacola(); });
+      el.querySelectorAll("[data-rm]").forEach(b => b.onclick = () => { sacola.splice(+b.dataset.rm,1); salvarSacola(); montarSacola(); });
+      $("#esvaziar").onclick = () => { if ($("#esvaziar").dataset.ok){ sacola = []; salvarSacola(); montarSacola(); } else { $("#esvaziar").dataset.ok = 1; $("#esvaziar").textContent = "Toque de novo para esvaziar"; } };
+    }
+    $("#fecharSacola").onclick = () => history.back();
+    $("#continuar").onclick = () => history.back();
+    atualizarContador();
+  }
+  function abrirSacola(empurrar=true){
+    if (atual) fechar();
+    sacolaAberta = true; montarSacola();
+    $("#fundoEscuro").classList.add("ativo"); $("#sacola").classList.add("ativa"); $("#sacola").scrollTop = 0;
+    document.body.style.overflow = "hidden";
+    if (empurrar) history.pushState({sacola:1}, "", "#sacola");
+    atualizarContador();
+  }
+  function fecharSacola(){
+    sacolaAberta = false;
+    $("#sacola").classList.remove("ativa");
+    if (!atual){ $("#fundoEscuro").classList.remove("ativo"); document.body.style.overflow = ""; }
+    atualizarContador();
   }
 
   function toast(t){ const el = $("#toast"); el.textContent = t; el.classList.add("on"); setTimeout(()=>el.classList.remove("on"), 1800); }
@@ -448,18 +596,24 @@ const PRODUTOS = [
   $("#filtros").onclick = e => { const b = e.target.closest(".chip"); if(!b) return; categoria = b.dataset.c; montarFiltros(); montarGrade(); window.scrollTo({top:0,behavior:"smooth"}); };
   $("#grade").onclick = e => { const c = e.target.closest(".card"); if (c) abrir(c.dataset.cod); };
   $("#fundoEscuro").onclick = () => history.back();
+  $("#btnSacola").onclick = adicionar;
+  $("#btnAbrirSacola").onclick = () => abrirSacola();
+  $("#flutuante").onclick = () => abrirSacola();
   $("#btnBusca").onclick = () => { $("#busca").classList.toggle("aberta"); if ($("#busca").classList.contains("aberta")) $("#campoBusca").focus(); };
   $("#campoBusca").oninput = e => { termo = e.target.value; montarGrade(); };
-  document.addEventListener("keydown", e => { if (e.key === "Escape" && atual) history.back(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && (atual || sacolaAberta)) history.back(); });
   window.addEventListener("popstate", () => {
-    const cod = location.hash.slice(1);
-    if (cod) abrir(cod, false); else fechar();
+    const h = location.hash.slice(1);
+    if (h === "sacola") { abrirSacola(false); return; }
+    if (sacolaAberta) fecharSacola();
+    if (h) abrir(h, false); else fechar();
   });
 
-  montarMarca(); montarFiltros(); montarGrade();
+  montarMarca(); montarFiltros(); montarGrade(); limparSacola(); salvarSacola();
   /* Link direto de uma peça: usejl.github.io/#JL002 */
   const inicial = location.hash.slice(1);
-  if (inicial) { history.replaceState(null, "", location.pathname); history.pushState({cod:inicial}, "", "#"+inicial); abrir(inicial, false); }
+  if (inicial === "sacola") { history.replaceState(null, "", location.pathname); history.pushState({sacola:1}, "", "#sacola"); abrirSacola(false); }
+  else if (inicial) { history.replaceState(null, "", location.pathname); history.pushState({cod:inicial}, "", "#"+inicial); abrir(inicial, false); }
 })();
 </script>
 </body>
