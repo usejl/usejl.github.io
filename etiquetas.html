@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Etiquetas Use JL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/*
+VOICE: ferramenta de balcão, calma e direta, com a cara da Use JL.
+IDEA: a etiqueta de papel 15x30 mm pendurada na peça.
+PICTURE: a prévia da etiqueta, ampliada, exatamente como vai sair da impressora.
+COLOUR and TYPE: off white/bege, preto, marrom café; Tenor Sans nos títulos, Inter no resto.
+LAYOUT: barra da impressora no topo, prévia + lista das peças, ações fixas.
+*/
+:root{color-scheme:light dark;--bg:light-dark(#f6f1ea,#1b1714);--card:light-dark(#fffdf9,#262019);--ink:light-dark(#1d1915,#f2ebe2);--mut:light-dark(#6f645a,#b4a899);--line:light-dark(#e2d8cb,#3a3129);--cafe:#5b3a29;--cafe2:light-dark(#5b3a29,#c89a7a);--ok:#4f7a5a;--err:#a8452f}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,Arial,sans-serif;overflow-x:clip}
+h1,h2{font-family:"Tenor Sans",Georgia,serif;font-weight:400;margin:0;line-height:1.1}
+h1{font-size:clamp(28px,4vw,40px)}h2{font-size:20px;margin-bottom:10px}
+.band{padding:clamp(18px,3vw,36px) max(4vw,14px)}
+.top{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:end;justify-content:space-between;border-bottom:1px solid var(--line)}
+.top p{margin:6px 0 0;color:var(--mut);max-width:60ch}
+.pr{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.dot{width:10px;height:10px;border-radius:50%;background:#b9aa98;flex:none}.dot.on{background:var(--ok)}
+button,select,input,textarea{font:inherit;color:inherit}
+button{min-height:44px;padding:0 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);cursor:pointer}
+button.main{background:var(--cafe);border-color:var(--cafe);color:#fff;font-weight:600}
+button:disabled{opacity:.45;cursor:default}
+button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--cafe2);outline-offset:2px}
+select,input[type=number],input[type=search]{min-height:40px;border:1px solid var(--line);border-radius:8px;background:var(--card);padding:0 10px;font-size:16px}
+.grid{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:24px;align-items:start}
+@media(max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.label-wrap{background:light-dark(#efe6da,#14110e);border-radius:12px;padding:22px;display:grid;place-items:center}
+#prev{width:100%;max-width:330px;aspect-ratio:2/1;background:#fff;border-radius:6px;box-shadow:0 6px 18px rgba(60,35,20,.18);image-rendering:pixelated;display:block}
+.cap{font-size:13px;color:var(--mut);margin-top:10px}
+.opts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 12px;align-items:center;margin-top:14px;font-size:14px}
+.opts label{color:var(--mut)}
+details{margin-top:14px}summary{cursor:pointer;color:var(--cafe2);font-weight:600;min-height:32px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.tools input[type=search]{flex:1 1 180px}
+.scroll{overflow:auto;max-height:520px;border:1px solid var(--line);border-radius:10px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{position:sticky;top:0;background:var(--card);font-weight:600;font-size:13px;color:var(--mut);z-index:1}
+td.n,th.n{text-align:right;white-space:nowrap}
+tr.sel td{background:light-dark(#f4ebe0,#2e261f)}
+tr:hover td{cursor:pointer}
+td input[type=number]{width:64px;min-height:34px}
+input[type=checkbox]{width:20px;height:20px;accent-color:var(--cafe)}
+.bar{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.bar .sum{font-weight:600}
+.prog{height:6px;background:var(--line);border-radius:6px;overflow:hidden;flex:1 1 160px;max-width:260px}.prog i{display:block;height:100%;width:0;background:var(--cafe2);transition:width .3s}
+#log{font:12px/1.5 ui-monospace,Consolas,monospace;white-space:pre-wrap;max-height:160px;overflow:auto;color:var(--mut);margin:0}
+textarea{width:100%;min-height:110px;border:1px solid var(--line);border-radius:8px;background:var(--card);padding:10px;font-size:14px}
+.warn{color:var(--err)}
+.muted{color:var(--mut);font-size:13px}
+@media(max-width:600px){.hide-s{display:none}}
+@media(prefers-reduced-motion:reduce){.prog i{transition:none}}
+</style>
+</head>
+<body>
+<header class="band top">
+  <div>
+    <h1>Etiquetas Use JL</h1>
+    <p>Imprime as etiquetas 15×30 mm na Mecolour D11s direto do computador, pelo Bluetooth do Chrome ou do Edge, com os dados da aba Estoque.</p>
+  </div>
+  <div class="pr">
+    <span class="dot" id="dot"></span><span id="pst">Impressora desconectada</span>
+    <button class="main" id="bConn">Conectar impressora</button>
+    <button id="bInfo" disabled>Testar</button>
+  </div>
+</header>
+
+<main class="band grid">
+  <section>
+    <div class="label-wrap"><canvas id="prev" width="240" height="120"></canvas></div>
+    <div class="cap" id="pcap">Prévia em tamanho de impressão (203 dpi). Clique numa peça da lista para ver a etiqueta dela.</div>
+
+    <div class="opts">
+      <label for="oRef">Referência</label>
+      <select id="oRef"><option value="mod">Código do modelo (JL001)</option><option value="sku">SKU completo (JL001-PRE-M)</option></select>
+      <label for="oDen">Densidade</label>
+      <select id="oDen"><option value="0">Clara</option><option value="1" selected>Média</option><option value="2">Forte</option></select>
+    </div>
+
+    <details>
+      <summary>Ajustes da impressora</summary>
+      <div class="opts">
+        <label for="oRot">Rotação</label>
+        <select id="oRot"><option value="cw">90° horário</option><option value="ccw">90° anti-horário</option></select>
+        <label for="oOff">Deslocar (pontos)</label>
+        <input type="number" id="oOff" value="0" min="-40" max="40" step="2">
+        <label for="oProto">Comandos</label>
+        <select id="oProto"><option value="aiyin">AiYin (padrão)</option><option value="alt">Alternativo (se não sair nada)</option></select>
+        <label for="oChunk">Pacote BLE</label>
+        <select id="oChunk"><option>200</option><option>100</option><option>20</option></select>
+        <label for="oAll">Busca</label>
+        <span><input type="checkbox" id="oAll"> mostrar todos os aparelhos Bluetooth</span>
+      </div>
+      <p class="muted">Deslocar move o texto ao longo dos 30 mm, para centralizar se a primeira etiqueta sair torta. Se a impressora conectar e não imprimir nada, troque Comandos para Alternativo. Se der erro no meio, use pacote 100 ou 20.</p>
+    </details>
+
+    <details>
+      <summary>Atualizar com a planilha</summary>
+      <p class="muted">Na aba Estoque, selecione as colunas A até F (SKU, Peça, Cor, Tam, Preço de venda, Em estoque) com o cabeçalho, copie e cole aqui. Também aceita um arquivo .csv ou .xlsx baixado da planilha.</p>
+      <textarea id="paste" placeholder="Cole aqui as linhas copiadas da planilha"></textarea>
+      <div class="tools" style="margin-top:8px">
+        <button id="bPaste">Usar o que colei</button>
+        <label class="muted">ou arquivo <input type="file" id="fFile" accept=".csv,.tsv,.txt,.xlsx"></label>
+      </div>
+    </details>
+
+    <details>
+      <summary>Registro</summary>
+      <pre id="log"></pre>
+    </details>
+  </section>
+
+  <section class="card">
+    <h2>Peças</h2>
+    <div class="tools">
+      <input type="search" id="q" placeholder="Buscar por nome ou código">
+      <select id="fCat"><option value="">Todas as categorias</option></select>
+      <button id="bAll">Marcar todas</button>
+      <button id="bNone">Desmarcar</button>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th></th><th>SKU</th><th>Peça</th><th class="hide-s">Tam</th><th class="n">Preço</th><th class="n">Etiquetas</th></tr></thead>
+        <tbody id="tb"></tbody>
+      </table>
+    </div>
+    <p class="muted" id="src">Dados da aba Estoque do Mapa Financeiro em 22/11/2026: 70 SKUs, 73 peças. A quantidade de etiquetas começa igual ao que está em estoque.</p>
+  </section>
+</main>
+
+<footer class="band bar">
+  <span class="sum" id="sum">0 etiquetas</span>
+  <div class="prog"><i id="pbar"></i></div>
+  <span class="muted" id="pmsg"></span>
+  <div class="pr">
+    <button id="bPng">Baixar imagens para o celular</button>
+    <button id="bTest" disabled>Imprimir 1 de teste</button>
+    <button class="main" id="bPrint" disabled>Imprimir selecionadas</button>
+    <button id="bStop" hidden>Parar</button>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+{
+// ---------- dados (aba Estoque, revisão 23) ----------
+const RAW = [
+["JL001-PRE-M","Vestido Valentina","M",229.9,1,"Vestidos"],["JL001-ROS-P","Vestido Valentina","P",229.9,1,"Vestidos"],
+["JL002-CHU-G","Vestido Karen","G",179.9,1,"Vestidos"],["JL002-CHU-P","Vestido Karen","P",179.9,1,"Vestidos"],
+["JL003-OFW-M","Vestido Eva","M",239.9,1,"Vestidos"],["JL003-ROS-P","Vestido Eva","P",239.9,1,"Vestidos"],
+["JL005-ROS-P","Vestido Longo Glow","P",189.9,1,"Vestidos"],["JL005-PRE-M","Vestido Longo Glow","M",189.9,1,"Vestidos"],["JL005-VRM-G","Vestido Longo Glow","G",189.9,1,"Vestidos"],
+["JL006-BRA-P","Vestido Longo Renda","P",289.9,1,"Vestidos"],["JL006-ROS-M","Vestido Longo Renda","M",289.9,1,"Vestidos"],
+["JL007-ROS-P","Vestido Longo Sereia","P",279.9,1,"Vestidos"],["JL007-MAR-M","Vestido Longo Sereia","M",279.9,1,"Vestidos"],
+["JL008-VER-M","Conjunto Sonia","M",239.9,1,"Conjuntos"],["JL008-BEG-M","Conjunto Sonia","M",239.9,1,"Conjuntos"],["JL008-AZU-P","Conjunto Sonia","P",239.9,1,"Conjuntos"],
+["JL009-AZU-P","Conjunto Suzete","P",219.9,1,"Conjuntos"],
+["JL010-PRE-M","Conjunto Evany","M",199.9,1,"Conjuntos"],["JL010-ROS-P","Conjunto Evany","P",199.9,1,"Conjuntos"],
+["JL011-NUD-P","Conjunto Mileide","P",169.9,1,"Conjuntos"],["JL011-AMA-G","Conjunto Mileide","G",169.9,1,"Conjuntos"],["JL011-VRM-M","Conjunto Mileide","M",169.9,1,"Conjuntos"],
+["JL015-PRE-U","Conjunto Alfaiataria Saia Pregueada","U",289.9,1,"Conjuntos"],
+["JL016-VRM-U","Macaquinho Isadora","U",219.9,1,"Macaquinho"],["JL016-BRA-U","Macaquinho Isadora","U",219.9,1,"Macaquinho"],
+["JL017-AMA-M","Blusa Olenka","M",119.9,1,"Blusas"],["JL017-ROS-P","Blusa Olenka","P",119.9,1,"Blusas"],
+["JL018-NUD-M","Blusa Ada","M",119.9,1,"Blusas"],["JL018-ROS-P","Blusa Ada","P",119.9,1,"Blusas"],
+["JL019-PRE-U","Blusa Charlot (tricô listrada)","U",89.9,1,"Blusas"],["JL019-AZU-U","Blusa Charlot (tricô listrada)","U",89.9,1,"Blusas"],["JL019-ROS-U","Blusa Charlot (tricô listrada)","U",89.9,1,"Blusas"],
+["JL020-BRA-U","Camisa Pedraria","U",199.9,1,"Blusas"],["JL020-PRE-U","Camisa Pedraria","U",199.9,1,"Blusas"],
+["JL021-BRA-M","Short Ester","M",129.9,1,"Calças & Saias"],["JL021-RSE-P","Short Ester","P",129.9,1,"Calças & Saias"],
+["JL022-PRE-U","Calça Alfaiataria com Cinto","U",199.9,1,"Calças & Saias"],
+["JL023-SRT-36","Calça Baggy Alana","36",159.9,1,"Calças & Saias"],["JL023-SRT-38","Calça Baggy Alana","38",159.9,1,"Calças & Saias"],["JL023-SRT-40","Calça Baggy Alana","40",159.9,1,"Calças & Saias"],["JL023-SRT-42","Calça Baggy Alana","42",159.9,1,"Calças & Saias"],["JL023-SRT-44","Calça Baggy Alana","44",159.9,1,"Calças & Saias"],
+["JL024-SRT-36","Calça Pantalona Maelle","36",159.9,1,"Calças & Saias"],["JL024-SRT-38","Calça Pantalona Maelle","38",159.9,1,"Calças & Saias"],["JL024-SRT-40","Calça Pantalona Maelle","40",159.9,1,"Calças & Saias"],["JL024-SRT-42","Calça Pantalona Maelle","42",159.9,1,"Calças & Saias"],["JL024-SRT-44","Calça Pantalona Maelle","44",159.9,1,"Calças & Saias"],
+["JL025-VRM-P","Calça Pantalona Luxo","P",159.9,1,"Calças & Saias"],
+["JL026-ROS-P","Calça Pantalona Ricca","P",139.9,1,"Calças & Saias"],["JL026-ROS-M","Calça Pantalona Ricca","M",139.9,1,"Calças & Saias"],
+["JL027-LVM-P","Biquíni Bordado Leveza Empina Bumbum","P",139.9,1,"Moda Praia"],["JL028-LVM-M","Biquíni Bordado Leveza Fita","M",139.9,1,"Moda Praia"],
+["JL029-PMA-M","Biquíni Poá Leveza Mantega Cortina","M",129.9,1,"Moda Praia"],["JL029-PMA-P","Biquíni Poá Leveza Mantega Cortina","P",129.9,1,"Moda Praia"],
+["JL030-LEV-G","Biquíni Leveza Top e Asa Delta","G",129.9,1,"Moda Praia"],
+["JL031-CAL-P","Biquíni Calor Fita Tradicional","P",129.9,1,"Moda Praia"],["JL031-CAL-M","Biquíni Calor Fita Tradicional","M",129.9,1,"Moda Praia"],
+["JL032-CAL-G","Biquíni Calor Asa Delta","G",109.9,1,"Moda Praia"],["JL033-NOR-P","Biquíni Noronha Cortina","P",109.9,1,"Moda Praia"],
+["JL034-NOR-M","Biquíni Noronha Top e Calcinha Cortina","M",139.9,1,"Moda Praia"],["JL035-MIC-P","Biquíni Mar Infinito Creme Asa Delta","P",109.9,1,"Moda Praia"],
+["JL036-MIC-M","Biquíni Mar Infinito Creme Empina Bumbum","M",109.9,1,"Moda Praia"],["JL037-MIC-G","Biquíni Mar Infinito Creme Tomara que Caia","G",139.9,1,"Moda Praia"],
+["JL038-CAL-U","Canga Calor","U",109.9,3,"Moda Praia"],["JL039-LVM-U","Canga Leveza Menta","U",109.9,2,"Moda Praia"],
+["JL040-VRM-P","Blusa de Renda Premium","P",139.9,1,"Blusas"],["JL040-BRA-G","Blusa de Renda Premium","G",139.9,1,"Blusas"],
+["JL041-OFW-M","Conjunto Seda com Renda","M",209.9,1,"Conjuntos"],
+["JL042-AZU-P","Conjunto Alfaiataria Premium (colete e calça)","P",289.9,1,"Conjuntos"],
+["JL043-PRE-U","Vestido Poliamida Forro Duplo","U (38–42)",169.9,1,"Vestidos"]];
+let items = RAW.map(r=>({sku:r[0],nome:r[1],tam:r[2],preco:r[3],qtd:r[4],cat:r[5],on:r[4]>0}));
+
+const $ = id=>document.getElementById(id);
+const sleep = ms=>new Promise(r=>setTimeout(r,ms));
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const brl = v=>'R$'+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const log = m=>{const l=$('log');l.textContent+=new Date().toLocaleTimeString('pt-BR')+'  '+m+'\n';l.scrollTop=1e9};
+let current = items[0];
+
+// ---------- preferências ----------
+const PREF=['oRef','oDen','oRot','oOff','oProto','oChunk'];
+try{const p=JSON.parse(localStorage.getItem('usejl_etq')||'{}');PREF.forEach(k=>{if(p[k]!=null)$(k).value=p[k]})}catch(e){}
+const savePref=()=>{try{const p={};PREF.forEach(k=>p[k]=$(k).value);localStorage.setItem('usejl_etq',JSON.stringify(p))}catch(e){}};
+
+// ---------- desenho da etiqueta ----------
+// Área imprimível: 30 mm (240 pontos) x 12 mm (96 pontos) — a cabeça térmica tem 96 pontos.
+const W=240,H=96,FONT='Arial, Helvetica, sans-serif';
+function refText(it){const r=$('oRef').value==='sku'?it.sku:it.sku.slice(0,5);return 'REF. '+r+'  |  TAM. '+it.tam}
+function fit(ctx,txt,weight,max,min,width){let s=max;for(;s>min;s--){ctx.font=`${weight} ${s}px ${FONT}`;if(ctx.measureText(txt).width<=width)break}ctx.font=`${weight} ${s}px ${FONT}`;return s}
+function wrap2(ctx,txt,width){const w=txt.split(' ');let best=[txt,''],bw=1e9;for(let i=1;i<w.length;i++){const a=w.slice(0,i).join(' '),b=w.slice(i).join(' ');const m=Math.max(ctx.measureText(a).width,ctx.measureText(b).width);if(m<bw){bw=m;best=[a,b]}}return best}
+function drawLabel(ctx,it,sc,dx,ty,tx){
+  ctx.save();ctx.setTransform(sc,0,0,sc,tx||0,ty||0);
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.fillStyle='#000';
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  const cx=W/2+(dx||0),tw=W-20;
+  const s=fit(ctx,it.nome,'bold',25,15,tw);
+  if(ctx.measureText(it.nome).width<=tw){ctx.fillText(it.nome,cx,20)}
+  else{const s2=fit(ctx,it.nome,'bold',16,11,tw*2);const[a,b]=wrap2(ctx,it.nome,tw);fit(ctx,a.length>b.length?a:b,'bold',s2,10,tw);ctx.fillText(a,cx,11);ctx.fillText(b,cx,29)}
+  fit(ctx,refText(it),'normal',15,10,tw);ctx.fillText(refText(it),cx,52);
+  fit(ctx,brl(it.preco),'bold',29,18,tw);ctx.fillText(brl(it.preco),cx,78);
+  ctx.restore();
+}
+// Bitmap 1 bit para a impressora: 96 pontos por linha, 240 linhas (rotacionado).
+function bitmap(it){
+  const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+  drawLabel(x,it,1,Number($('oOff').value)||0);
+  const d=x.getImageData(0,0,W,H).data,out=new Uint8Array(12*W),cw=$('oRot').value==='cw';
+  for(let y2=0;y2<W;y2++)for(let x2=0;x2<H;x2++){
+    const ox=cw?y2:W-1-y2,oy=cw?H-1-x2:x2,i=(oy*W+ox)*4;
+    if(d[i]*.3+d[i+1]*.59+d[i+2]*.11<170)out[y2*12+(x2>>3)]|=0x80>>(x2&7);
+  }
+  return out;
+}
+function preview(){
+  const it=current;if(!it)return;
+  const c=$('prev'),x=c.getContext('2d'),t=document.createElement('canvas');t.width=W;t.height=H;const tx=t.getContext('2d');
+  drawLabel(tx,it,1,Number($('oOff').value)||0);
+  const im=tx.getImageData(0,0,W,H),d=im.data;
+  for(let i=0;i<d.length;i+=4){const v=d[i]*.3+d[i+1]*.59+d[i+2]*.11<170?0:255;d[i]=d[i+1]=d[i+2]=v}
+  tx.putImageData(im,0,0);x.fillStyle='#fff';x.fillRect(0,0,240,120);x.drawImage(t,0,12);
+  $('pcap').textContent=`${it.sku} — prévia em tamanho de impressão (203 dpi). As faixas de 1,5 mm em cima e embaixo ficam em branco.`;
+}
+
+// ---------- lista ----------
+function cats(){const s=[...new Set(items.map(i=>i.cat).filter(Boolean))];$('fCat').innerHTML='<option value="">Todas as categorias</option>'+s.map(c=>`<option>${esc(c)}</option>`).join('')}
+function visible(){const q=$('q').value.trim().toLowerCase(),c=$('fCat').value;return items.filter(i=>(!c||i.cat===c)&&(!q||(i.nome+' '+i.sku).toLowerCase().includes(q)))}
+function render(){
+  $('tb').innerHTML=visible().map(i=>{const k=items.indexOf(i);return `<tr data-k="${k}" class="${i.on?'sel':''}"><td><input type="checkbox" data-c="${k}" ${i.on?'checked':''} aria-label="Imprimir ${esc(i.sku)}"></td><td style="white-space:nowrap">${esc(i.sku)}</td><td>${esc(i.nome)}</td><td class="hide-s">${esc(i.tam)}</td><td class="n">${brl(i.preco)}</td><td class="n"><input type="number" min="0" max="99" value="${i.qtd}" data-q="${k}" aria-label="Quantidade ${esc(i.sku)}"></td></tr>`}).join('')||'<tr><td colspan="6" class="muted">Nenhuma peça encontrada.</td></tr>';
+  total();
+}
+function queue(){const q=[];items.forEach(i=>{if(i.on)for(let n=0;n<i.qtd;n++)q.push(i)});return q}
+function total(){const n=queue().length;$('sum').textContent=n+(n===1?' etiqueta':' etiquetas')+' selecionada'+(n===1?'':'s')}
+$('tb').addEventListener('click',e=>{const tr=e.target.closest('tr[data-k]');if(!tr)return;const it=items[+tr.dataset.k];
+  if(e.target.dataset.c!=null){it.on=e.target.checked;tr.classList.toggle('sel',it.on);total()}
+  current=it;preview()});
+$('tb').addEventListener('input',e=>{if(e.target.dataset.q!=null){items[+e.target.dataset.q].qtd=Math.max(0,parseInt(e.target.value)||0);total()}});
+$('q').addEventListener('input',render);$('fCat').addEventListener('change',render);
+$('bAll').onclick=()=>{visible().forEach(i=>i.on=true);render()};
+$('bNone').onclick=()=>{visible().forEach(i=>i.on=false);render()};
+PREF.forEach(k=>$(k).addEventListener('change',()=>{savePref();preview()}));
+
+// ---------- importar da planilha ----------
+const num=v=>{if(typeof v==='number')return v;v=String(v||'').replace(/R\$|\s/g,'');if(v.includes(','))v=v.replace(/\./g,'').replace(',','.');return parseFloat(v)||0};
+function loadRows(rows){
+  rows=rows.filter(r=>r&&r.some(c=>String(c).trim()!==''));if(rows.length<2)throw new Error('Não encontrei linhas com dados.');
+  const h=rows[0].map(c=>String(c).toLowerCase().trim()),f=(...n)=>h.findIndex(x=>n.some(m=>x.startsWith(m)));
+  const cS=f('sku','código','codigo'),cN=f('peça','peca','modelo','nome','produto'),cT=f('tam'),cP=f('preço de venda','preço','preco','valor'),cQ=f('em estoque','qtd','quant','estoque'),cC=f('categoria');
+  if(cS<0||cN<0||cP<0)throw new Error('Preciso das colunas SKU, Peça e Preço de venda no cabeçalho.');
+  const old=new Map(items.map(i=>[i.sku,i.cat]));
+  items=rows.slice(1).filter(r=>String(r[cS]||'').trim()).map(r=>{const q=cQ<0?1:Math.max(0,Math.round(num(r[cQ])));const sku=String(r[cS]).trim();
+    return{sku,nome:String(r[cN]||'').trim(),tam:cT<0?'':String(r[cT]||'').replace(/^'/,'').trim(),preco:num(r[cP]),qtd:q,cat:cC<0?(old.get(sku)||''):String(r[cC]||''),on:q>0}});
+  current=items[0];cats();render();preview();
+  $('src').textContent=`Dados importados agora: ${items.length} SKUs, ${items.reduce((a,i)=>a+i.qtd,0)} peças.`;log(`Planilha importada: ${items.length} SKUs.`);
+}
+function parseText(t){const d=t.includes('\t')?'\t':(t.split('\n')[0].split(';').length>t.split('\n')[0].split(',').length?';':',');
+  return t.replace(/\r/g,'').split('\n').map(l=>{const o=[];let cur='',q=false;for(const ch of l){if(ch==='"'){q=!q}else if(ch===d&&!q){o.push(cur);cur=''}else cur+=ch}o.push(cur);return o})}
+$('bPaste').onclick=()=>{try{loadRows(parseText($('paste').value))}catch(e){log('Erro: '+e.message);alertBox(e.message)}};
+$('fFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{
+  if(/\.xlsx$/i.test(f.name)){if(!window.XLSX)throw new Error('Leitor de .xlsx não carregou (sem internet?). Use .csv ou cole as linhas.');
+    const wb=XLSX.read(await f.arrayBuffer());const sh=wb.Sheets['Estoque']||wb.Sheets[wb.SheetNames[0]];loadRows(XLSX.utils.sheet_to_json(sh,{header:1,raw:true}))}
+  else loadRows(parseText(await f.text()))}catch(err){log('Erro: '+err.message);alertBox(err.message)}};
+function alertBox(m){$('pmsg').textContent=m;$('pmsg').className='warn'}
+
+// ---------- Bluetooth (protocolo AiYin D11s) ----------
+const SV=['000018f0-0000-1000-8000-00805f9b34fb','0000ff00-0000-1000-8000-00805f9b34fb','e7810a71-73ae-499d-8c15-faa9aef0c3f2','49535343-fe7d-4ae5-8fa9-9fafd205e455'];
+let dev=null,wr=null,rx=[],waiter=null,stopFlag=false,busy=false;
+const hex=a=>[...a].map(b=>b.toString(16).padStart(2,'0')).join(' ');
+function setConn(on,name){$('dot').classList.toggle('on',on);$('pst').textContent=on?'Conectada: '+name:'Impressora desconectada';
+  $('bConn').textContent=on?'Desconectar':'Conectar impressora';['bInfo','bTest','bPrint'].forEach(b=>$(b).disabled=!on||busy)}
+async function connect(){
+  if(dev&&dev.gatt.connected){dev.gatt.disconnect();return}
+  if(!navigator.bluetooth){alertBox('Este navegador não tem Bluetooth web. Abra no Google Chrome ou no Microsoft Edge do computador.');return}
+  try{
+    dev=await navigator.bluetooth.requestDevice($('oAll').checked?{acceptAllDevices:true,optionalServices:SV}:{filters:['D11','FICHERO','Mecolour','AiYin'].map(p=>({namePrefix:p})),optionalServices:SV});
+    dev.addEventListener('gattserverdisconnected',()=>{wr=null;setConn(false);log('Impressora desconectou.')});
+    log('Conectando em '+dev.name+'…');const g=await dev.gatt.connect();
+    for(const u of SV){let s;try{s=await g.getPrimaryService(u)}catch(e){continue}
+      const ch=await s.getCharacteristics();
+      const w=ch.find(c=>/2af1|ff02/.test(c.uuid))||ch.find(c=>c.properties.writeWithoutResponse||c.properties.write);
+      const n=ch.find(c=>/2af0|ff01/.test(c.uuid))||ch.find(c=>c.properties.notify);
+      if(!w)continue;wr=w;
+      if(n){await n.startNotifications();n.addEventListener('characteristicvaluechanged',e=>{const v=new Uint8Array(e.target.value.buffer);rx.push(...v);if(waiter)waiter()})}
+      log('Serviço '+u.slice(4,8)+', escrita '+w.uuid.slice(4,8)+(n?', aviso '+n.uuid.slice(4,8):''));break}
+    if(!wr)throw new Error('Conectou, mas não achei o canal de impressão. Ligue "mostrar todos os aparelhos" e tente de novo.');
+    setConn(true,dev.name);$('pmsg').textContent='';
+  }catch(e){if(e.name!=='NotFoundError'){log('Erro: '+e.message);alertBox(e.message)}setConn(false)}
+}
+async function send(bytes){const a=bytes instanceof Uint8Array?bytes:new Uint8Array(bytes);
+  if(wr.properties.writeWithoutResponse)await wr.writeValueWithoutResponse(a);else await wr.writeValue(a)}
+async function sendChunked(a){const n=Number($('oChunk').value);for(let i=0;i<a.length;i+=n){if(stopFlag)throw new Error('Parado.');await send(a.subarray(i,i+n));await sleep(20)}}
+async function ask(bytes,ms){rx=[];await send(bytes);const t0=Date.now();
+  while(Date.now()-t0<ms){if(rx.length)break;await new Promise(r=>{waiter=r;setTimeout(r,250)})}
+  waiter=null;await sleep(60);return new Uint8Array(rx)}
+async function printOne(it){
+  const alt=$('oProto').value==='alt',bm=bitmap(it);
+  await send([0x10,0xFF,0x84,0x00]);await sleep(50);           // papel com gap (etiqueta)
+  await send(new Uint8Array(12));await sleep(50);              // acordar
+  await send(alt?[0x10,0xFF,0xF1,0x03]:[0x10,0xFF,0xFE,0x01]);await sleep(50); // habilitar
+  const hd=new Uint8Array([0x1D,0x76,0x30,0x00,0x0C,0x00,W&0xFF,W>>8]),all=new Uint8Array(hd.length+bm.length);all.set(hd);all.set(bm,hd.length);
+  await sendChunked(all);await sleep(500);
+  await send([0x1D,0x0C]);await sleep(300);                    // avançar até a próxima etiqueta
+  const r=await ask(alt?[0x10,0xFF,0xF1,0x45]:[0x10,0xFF,0xFE,0x45],60000);
+  if(!r.length)log('Sem confirmação da impressora para '+it.sku+' (seguindo).');
+  else if(r[0]===0xFF&&r[1]){const e=[];if(r[1]&2)e.push('tampa aberta');if(r[1]&4)e.push('sem etiqueta');if(r[1]&8)e.push('bateria baixa');if(r[1]&1)e.push('superaquecida');throw new Error('Impressora: '+(e.join(', ')||hex(r)))}
+}
+async function run(list){
+  if(!wr||busy||!list.length)return;busy=true;stopFlag=false;setConn(true,dev.name);$('bStop').hidden=false;$('pmsg').className='muted';
+  try{await send([0x10,0xFF,0x10,0x00,Number($('oDen').value)]);await sleep(120);
+    for(let i=0;i<list.length;i++){if(stopFlag)break;$('pmsg').textContent=`Imprimindo ${i+1} de ${list.length}: ${list[i].sku}`;
+      await printOne(list[i]);$('pbar').style.width=((i+1)/list.length*100)+'%';log('Impressa '+list[i].sku)}
+    $('pmsg').textContent=stopFlag?'Parado.':`Pronto: ${list.length} etiqueta${list.length>1?'s':''}.`;
+  }catch(e){log('Erro: '+e.message);alertBox(e.message)}
+  busy=false;$('bStop').hidden=true;setConn(!!(dev&&dev.gatt.connected),dev&&dev.name);
+}
+$('bConn').onclick=connect;
+$('bStop').onclick=()=>{stopFlag=true};
+$('bTest').onclick=()=>run([current]);
+$('bPrint').onclick=()=>run(queue());
+$('bInfo').onclick=async()=>{try{const s=await ask([0x10,0xFF,0x40],3000),b=await ask([0x10,0xFF,0x50,0xF1],3000);
+  log('Status: '+(s.length?hex(s):'sem resposta')+' · Bateria: '+(b.length?hex(b):'sem resposta'));
+  $('pmsg').className='muted';$('pmsg').textContent=s.length?(s[s.length-1]===0?'Impressora pronta.':'Status '+hex(s)):'A impressora não respondeu ao teste; tente imprimir 1 de teste.'}catch(e){log('Erro: '+e.message)}};
+
+// ---------- imagens para o app AiYin no celular ----------
+$('bPng').onclick=async()=>{
+  const list=queue();if(!list.length)return;const sc=4,count={};
+  const mk=it=>{const c=document.createElement('canvas');c.width=W*sc;c.height=120*sc;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);
+    const k=0.8,s2=sc*k;drawLabel(x,it,s2,0,(c.height-H*s2)/2,(c.width-W*s2)/2);return c};
+  const toBlob=c=>new Promise(r=>c.toBlob(r,'image/png'));
+  const name=it=>{count[it.sku]=(count[it.sku]||0)+1;return `${it.sku}${it.qtd>1?'_'+count[it.sku]:''}.png`};
+  if(window.JSZip){const z=new JSZip();for(const it of list){z.file(name(it),await toBlob(mk(it)))}
+    const b=await z.generateAsync({type:'blob'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='etiquetas-usejl.zip';a.click();
+    $('pmsg').className='muted';$('pmsg').textContent=`${list.length} imagens em etiquetas-usejl.zip`}
+  else{for(const it of list){const a=document.createElement('a');a.href=URL.createObjectURL(await toBlob(mk(it)));a.download=name(it);a.click();await sleep(250)}}
+};
+
+cats();render();
+document.fonts&&document.fonts.ready.then(preview);preview();
+if(!navigator.bluetooth){$('pst').textContent='Abra no Chrome ou Edge do computador para imprimir'}
+}
+</script>
+</body>
+</html>
