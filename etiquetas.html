@@ -218,7 +218,7 @@ function drawLabel(ctx,it,sc,dx,ty,tx){
   const s=fit(ctx,it.nome,'bold',25,15,tw);
   if(ctx.measureText(it.nome).width<=tw){ctx.fillText(it.nome,cx,20)}
   else{const s2=fit(ctx,it.nome,'bold',16,11,tw*2);const[a,b]=wrap2(ctx,it.nome,tw);fit(ctx,a.length>b.length?a:b,'bold',s2,10,tw);ctx.fillText(a,cx,11);ctx.fillText(b,cx,29)}
-  fit(ctx,refText(it),'normal',15,10,tw);ctx.fillText(refText(it),cx,52);
+  fit(ctx,refText(it),'bold',15,10,tw);ctx.fillText(refText(it),cx,52);
   fit(ctx,brl(it.preco),'bold',29,18,tw);ctx.fillText(brl(it.preco),cx,78);
   ctx.restore();
 }
