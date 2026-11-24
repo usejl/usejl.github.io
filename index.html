@@ -349,7 +349,12 @@ const PRODUTOS = [
   function galeriaDe(p, cor){
     const proprias = (p.fotos[cor]||[]).map(f => ({src:"fotos/"+f}));
     if (!proprias.length) return [{src:provisoria(p)}];
-    return proprias.concat((p.gerais||[]).map(f => ({src:"fotos/"+f, legenda:"Foto ilustrativa · modelo em outras cores"})));
+    const vistas = new Set(p.fotos[cor]||[]);
+    const outras = coresDe(p).filter(c => c !== cor && qtd(p,c) > 0).flatMap(c => {
+      const f = (p.fotos[c]||[]).find(x => !vistas.has(x)); if (!f) return [];
+      vistas.add(f); return [{src:"fotos/"+f, legenda:"Também em " + nomeCor(c) + " · toque para ver", cor:c}];
+    });
+    return proprias.concat(outras, (p.gerais||[]).map(f => ({src:"fotos/"+f, legenda:"Foto ilustrativa · modelo em outras cores"})));
   }
 
   /* Cabeçalho e rodapé */
@@ -456,8 +461,9 @@ const PRODUTOS = [
     const p = atual; corSel = cor;
     [...$("#cores").children].forEach(x => x.setAttribute("aria-pressed", x.dataset.cor === cor));
     const fotos = galeriaDe(p, cor);
-    $("#galeria").innerHTML = fotos.map(f => `<div class="slide"><img src="${f.src}" alt="${p.nome} ${nomeCor(cor)}">${f.legenda?`<span class="legenda">${f.legenda}</span>`:""}</div>`).join("");
+    $("#galeria").innerHTML = fotos.map(f => `<div class="slide"${f.cor?` data-ir-cor="${f.cor}" style="cursor:pointer"`:""}><img src="${f.src}" alt="${p.nome} ${nomeCor(f.cor||cor)}">${f.legenda?`<span class="legenda">${f.legenda}</span>`:""}</div>`).join("");
     $("#galeria").scrollLeft = 0;
+    $("#galeria").querySelectorAll("[data-ir-cor]").forEach(el => el.onclick = () => escolherCor(el.dataset.irCor));
     $("#pontos").innerHTML = fotos.length > 1 ? fotos.map((_,i)=>`<i class="${i?"":"on"}"></i>`).join("") : "";
     const ok = disponivel(p);
     const tams = tamanhosDe(p, cor);
