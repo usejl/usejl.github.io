@@ -351,8 +351,8 @@ const PRODUTOS = [
     if (!proprias.length) return [{src:provisoria(p)}];
     const vistas = new Set(p.fotos[cor]||[]);
     const outras = coresDe(p).filter(c => c !== cor && qtd(p,c) > 0).flatMap(c => {
-      const f = (p.fotos[c]||[]).find(x => !vistas.has(x)); if (!f) return [];
-      vistas.add(f); return [{src:"fotos/"+f, legenda:"Também em " + nomeCor(c) + " · toque para ver", cor:c}];
+      const fs = (p.fotos[c]||[]).filter(x => !vistas.has(x)); fs.forEach(x => vistas.add(x));
+      return fs.map(f => ({src:"fotos/"+f, legenda:"Cor " + nomeCor(c) + " · toque para escolher", cor:c}));
     });
     return proprias.concat(outras, (p.gerais||[]).map(f => ({src:"fotos/"+f, legenda:"Foto ilustrativa · modelo em outras cores"})));
   }
